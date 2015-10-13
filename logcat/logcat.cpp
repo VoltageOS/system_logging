@@ -298,6 +298,7 @@ static void show_help() {
   Formatting:
 
   -v, --format=FORMAT         Sets log print format. See FORMAT below.
+  -C, -v color                Colored output"
   -D, --dividers              Print dividers between each log buffer.
   -B, --binary                Output the log in binary.
 
@@ -564,6 +565,7 @@ int Logcat::Run(int argc, char** argv) {
           { "dividers",      no_argument,       nullptr, 'D' },
           { "file",          required_argument, nullptr, 'f' },
           { "format",        required_argument, nullptr, 'v' },
+          { "color",         no_argument,       NULL,   'C' },
           // hidden and undocumented reserved alias for --regex
           { "grep",          required_argument, nullptr, 'e' },
           // hidden and undocumented reserved alias for --max-count
@@ -588,7 +590,7 @@ int Logcat::Run(int argc, char** argv) {
         };
         // clang-format on
 
-        int c = getopt_long(argc, argv, ":cdDhLt:T:gG:sQf:r:n:v:b:BSpP:m:e:", long_options,
+        int c = getopt_long(argc, argv, ":cdDhLt:T:gG:sQf:r:n:v:b:BSpCP:m:e:", long_options,
                             &option_index);
         if (c == -1) break;
 
@@ -724,6 +726,10 @@ int Logcat::Run(int argc, char** argv) {
 
             case 'P':
                 setPruneList = optarg;
+                break;
+
+            case 'C':
+                SetLogFormat("color");
                 break;
 
             case 'b':
