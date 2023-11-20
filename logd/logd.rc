@@ -18,8 +18,8 @@ service logd-reinit /system/bin/logd --reinit
     group logd
     task_profiles ServiceCapacityLow
 
-# Limit SELinux denial generation to 5/second
-service logd-auditctl /system/bin/auditctl -r 5
+# Limit SELinux denial generation to 50/second
+service logd-auditctl /system/bin/auditctl -r 50
     oneshot
     disabled
     user logd
